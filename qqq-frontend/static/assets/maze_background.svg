@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="416" viewBox="0 0 800 416">
+  <defs>
+    <!-- Pattern del pavimento (piastrelle del dungeon) -->
+    <pattern id="floor" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect width="32" height="32" fill="#1e222a" stroke="#15181e" stroke-width="2"/>
+      <rect x="6" y="6" width="20" height="20" fill="#222730" rx="2" opacity="0.6"/>
+    </pattern>
+
+    <!-- Pattern dei muri (effetto pseudo-3D) -->
+    <pattern id="wall" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect width="32" height="32" fill="#2f3542" stroke="#1d2129" stroke-width="1"/>
+      <!-- Luce in alto -->
+      <path d="M 0 0 L 32 0 L 28 4 L 4 4 Z" fill="#4b5465"/>
+      <!-- Ombra in basso -->
+      <path d="M 0 32 L 32 32 L 28 28 L 4 28 Z" fill="#1d2129"/>
+      <!-- Luce a sinistra -->
+      <path d="M 0 0 L 4 4 L 4 28 L 0 32 Z" fill="#3c4454"/>
+      <!-- Ombra a destra -->
+      <path d="M 32 0 L 28 4 L 28 28 L 32 32 Z" fill="#242833"/>
+      <!-- Dettaglio crepa casuale -->
+      <path d="M 12 12 L 16 18 L 20 16" fill="none" stroke="#1d2129" stroke-width="1.5" opacity="0.4"/>
+    </pattern>
+
+    <!-- Effetto bagliore per i Portali Magici -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 1. SFONDO PAVIMENTO -->
+  <rect width="800" height="416" fill="url(#floor)" />
+
+  <!-- DECORAZIONE: Cerchio magico al centro dell'arena -->
+  <g opacity="0.3">
+    <circle cx="400" cy="208" r="90" fill="none" stroke="#4ec9f7" stroke-width="3" stroke-dasharray="10 6"/>
+    <circle cx="400" cy="208" r="75" fill="none" stroke="#4ec9f7" stroke-width="1"/>
+    <polygon points="400,118 486,260 314,260" fill="none" stroke="#4ec9f7" stroke-width="1.5"/>
+    <polygon points="400,298 314,156 486,156" fill="none" stroke="#4ec9f7" stroke-width="1.5"/>
+  </g>
+
+  <!-- 2. MURI (Posizionati esattamente sulle coordinate degli '1' della matrice) -->
+  <g fill="url(#wall)">
+    <!-- Muro Superiore (Riga 0) -->
+    <rect x="0" y="0" width="800" height="32" />
+    
+    <!-- Muro Inferiore (Righe 11 e 12) -->
+    <rect x="0" y="352" width="800" height="64" />
+    
+    <!-- Muro Laterale Sinistro -->
+    <rect x="0" y="32" width="32" height="320" />
+    
+    <!-- Muro Laterale Destro -->
+    <rect x="768" y="32" width="32" height="320" />
+
+    <!-- Riga 1 (Spalle del portale in alto) -->
+    <rect x="32" y="32" width="352" height="32" />  <!-- sx -->
+    <rect x="416" y="32" width="352" height="32" /> <!-- dx -->
+
+    <!-- Pilastri laterali isolati (Righe 4,5 e 7,8) -->
+    <rect x="32" y="128" width="32" height="64" /> <!-- Pilastro Sx alto -->
+    <rect x="32" y="224" width="32" height="64" /> <!-- Pilastro Sx basso -->
+    <rect x="736" y="128" width="32" height="64" /> <!-- Pilastro Dx alto -->
+    <rect x="736" y="224" width="32" height="64" /> <!-- Pilastro Dx basso -->
+
+    <!-- I 4 Grandi Blocchi Interni (Righe 3,4,5 e 7,8,9 | Colonne 3-10 e 14-21) -->
+    <rect x="96" y="96" width="256" height="96" />  <!-- Blocco Alto Sx -->
+    <rect x="448" y="96" width="256" height="96" /> <!-- Blocco Alto Dx -->
+    <rect x="96" y="224" width="256" height="96" /> <!-- Blocco Basso Sx -->
+    <rect x="448" y="224" width="256" height="96" /> <!-- Blocco Basso Dx -->
+  </g>
+
+  <!-- 3. PORTALI MAGICI (Posizionati esattamente sui '2') -->
+  <g fill="#4ec9f7" filter="url(#glow)">
+    <!-- Portale Alto (Riga 1, Colonna 12) -->
+    <rect x="384" y="36" width="32" height="24" rx="4" />
+    
+    <!-- Portale Alto Sx (Riga 3, Colonna 1) -->
+    <rect x="36" y="96" width="24" height="32" rx="4" />
+    
+    <!-- Portale Alto Dx (Riga 3, Colonna 23) -->
+    <rect x="740" y="96" width="24" height="32" rx="4" />
+    
+    <!-- Portale Basso Sx (Riga 9, Colonna 1) -->
+    <rect x="36" y="288" width="24" height="32" rx="4" />
+    
+    <!-- Portale Basso Dx (Riga 9, Colonna 23) -->
+    <rect x="740" y="288" width="24" height="32" rx="4" />
+  </g>
+</svg>
